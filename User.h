@@ -1,6 +1,7 @@
 #pragma once
 #include<bits/stdc++.h>
 using namespace std;
+class Course;
 class User {
  protected :
   string FirstName;
@@ -12,5 +13,5 @@ class User {
   void EditData();
   void SignIn();
   void SignOut();
-  void SearchCourse();
+  Course* SearchCourse(string name);
 };
