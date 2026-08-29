@@ -8,16 +8,15 @@ class User {
   string LastName;
   string UserName;
   string Password;
-  bool loggedIn;
   static set<string>usernames;
   static set<string>passwords;
   static unordered_map<string, User*> users;
  public : 
   User(string firstName, string lastName, string userName, string password);
   void EditData(); // done
-  void SignIn();
-  void SignOut();
-  Course* SearchCourse(string name); // potential problem
+  User* SignIn(string, string); // done
+  void SignOut(User*&); // We could make it in the main as a regular function
+  Course* SearchCourse(string name); // done
  private :
  bool availablePass(string ); // done
  bool availableUsername(string ); // done

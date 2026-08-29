@@ -3,6 +3,7 @@
 set<string> User::usernames;
 set<string> User::passwords;
 unordered_map<string, User*> User::users;
+// NOTE !!!! WE NEED TO HANDLE THAT THE USER INPUTS A VALID USERNAME BEFORE WE INITIALIZE THE OBJECT
 User::User(string firstName, string lastName, string userName, string password) {
     FirstName = firstName;
     LastName = lastName;
@@ -10,8 +11,24 @@ User::User(string firstName, string lastName, string userName, string password) 
     Password = password;
     usernames.insert(UserName);
     passwords.insert(Password);
-    loggedIn = false;
     users[userName] = this;
+}
+User* User::SignIn(string userN, string pass) {
+  auto it = users.find(userN);
+  if(it == users.end()) {
+    cout << "Username not found.\n";
+    return nullptr;
+   }
+   User* user = it->second;
+   if(user->Password != pass) {
+    cout << "Password incorrect. \n";
+    return nullptr;
+   }
+   cout << "Signed in successfully. \n";
+   return user;
+}
+void User::SignOut(User*& u) {
+    u = nullptr;
 }
 void User::EditData() {
     string arr[4] = {"firstName", "lastName", "userName", "password"};
@@ -27,7 +44,9 @@ void User::EditData() {
                 if(arr[i] == "userName" ) {
                     if(availableUsername(s)) {
                         usernames.erase(UserName);
+                        users.erase(UserName);
                         UserName = s;
+                        users[s] = this;
                         usernames.insert(UserName);
                         cout << "Updated\n";
                     }
@@ -43,7 +62,9 @@ void User::EditData() {
                         }
                         if(availableUsername(s)) {
                            usernames.erase(UserName);
+                           users.erase(UserName);
                            UserName = s;
+                           users[s] = this;
                            usernames.insert(UserName);
                            cout << "Updated\n";
                         }
@@ -97,4 +118,13 @@ bool User::availableUsername(string username)
 bool User::availablePass(string password)
 {
     return passwords.find(password) == passwords.end();
+}
+Course* User::SearchCourse(string name)
+{
+    auto it = Course::courses.find(name);
+
+    if (it == Course::courses.end())
+        return nullptr;
+
+    return it->second;
 }
