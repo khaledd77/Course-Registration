@@ -4,7 +4,7 @@ using namespace std;
 class Student;
  
 class Course {
- protected :
+ public :
   string Name;
   string Id;  
   int Length;

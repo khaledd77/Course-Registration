@@ -9,6 +9,6 @@ class Admin : public User {
   void AddCourse(Course& c);
   vector<Course*> SetPre();
   void RemoveStudent(Student& s);
-  unordered_map<string, int> ManageGrades();
-  void SearchStudent(Student s);
+  void ManageGrades(Student& s, Course& c, int grade);
+  Student* SearchStudent(string username);
 };
