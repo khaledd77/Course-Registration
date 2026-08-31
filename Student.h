@@ -3,6 +3,7 @@
 class Course;
 
 class Student : public User {
+    friend class Admin;
  protected :
  unordered_set<Course*>courses;
  public :

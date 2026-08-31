@@ -8,15 +8,44 @@ Admin::Admin(string firstName, string lastName,
 }
 void Admin::RemoveCourse(string name) {
     auto it = Course::courses.find(name);
-    if(it != Course::courses.end()) {
-        Course::courses.erase(it);
+    if(it == Course::courses.end()) {
+        cout << "Course not found.\n";
+        return;
     }
+    Course* c = it->second;
+    for(Student* s : c->Students) {
+        s->courses.erase(c);
+    }
+    for(auto& p : Course::courses) {
+        Course* other = p.second;
+        other->Prerequisites.erase(
+            remove(other->Prerequisites.begin(), other->Prerequisites.end(), c),
+            other->Prerequisites.end()
+        );
+    }
+    Course::courses.erase(it);
+    delete c;
 }
 void Admin::AddCourse(Course& c) {
    Course::courses[c.Name] = &c;
 }
 void Admin::RemoveStudent(string username) {
-    users.erase(username);
+    auto it = users.find(username);
+    if(it == users.end() || !it->second->isStudent) {
+        cout << "Student not found.\n";
+        return;
+    }
+    Student* s = static_cast<Student*>(it->second);
+    for(Course* c : s->courses) {
+        c->Students.erase(
+            remove(c->Students.begin(), c->Students.end(), s),
+            c->Students.end()
+        );
+    }
+    usernames.erase(s->UserName);
+    passwords.erase(s->Password);
+    users.erase(it);
+    delete s;
 }
 void Admin::ManageGrades(Student& s, Course& c, int grade) {
     s.grades[c.Name] = grade;
@@ -50,7 +79,7 @@ void Admin::SetPre(Course& c) {
 void Admin::EditCourse(Course& c){
    cout << "Choose what you want to edit : \n";
    cout << "1. Name\n2. Id\n3. Length\n";
-   char choice;
+   int choice;
    cin >> choice;
    if(choice == 1) {
     string newName;

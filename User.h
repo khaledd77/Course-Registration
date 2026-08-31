@@ -3,6 +3,7 @@
 using namespace std;
 class Course;
 class User {
+    friend class Admin;
 protected :
  string UserName;
  string Password;
@@ -15,7 +16,7 @@ public :
  string LastName;
  User(string firstName, string lastName, string userName, string password, bool);
   void EditData(); // done
-  User* SignIn(string, string); // done
+  static User* SignIn(string, string); // done
   void SignOut(User*&); // We could make it in the main as a regular function
   Course* SearchCourse(string name); // done
  private :
