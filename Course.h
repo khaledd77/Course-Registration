@@ -13,6 +13,7 @@ class Course {
   vector<Student*> Students;
   vector<Course*>Prerequisites;
   public :
+  Course(string, string, int);
   string Name;
   static unordered_map<string, Course*> courses;
   void EditCourse(Course& c);
