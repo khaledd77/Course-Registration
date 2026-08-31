@@ -5,10 +5,11 @@ class Course;
 
 class Admin : public User {
  public :
-  void RemoveCourse(Course& c);
-  void AddCourse(Course& c);
-  vector<Course*> SetPre();
-  void RemoveStudent(Student& s);
-  void ManageGrades(Student& s, Course& c, int grade);
-  Student* SearchStudent(string username);
+ Admin(string firstName, string lastName, string userName, string password); // done
+  void RemoveCourse(string name); // done
+  void AddCourse(Course& c); // done
+  void SetPre(Course& c);
+  void RemoveStudent(string username); // done
+  void ManageGrades(Student& s, Course& c, int grade); // done
+  Student* SearchStudent(string username); // done
 };

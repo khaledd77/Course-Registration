@@ -4,10 +4,10 @@ class Course;
 
 class Student : public User {
  protected :
-  unordered_map<string, int>grades;
-  unordered_set<Course*>courses;
+ unordered_set<Course*>courses;
  public :
  Student(string firstName, string lastName, string userName, string password);
+ unordered_map<string, int>grades;
  void ViewGrades();
  void AddCourse(Course& c);
  void Report();
