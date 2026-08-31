@@ -11,5 +11,6 @@ class Admin : public User {
   void SetPre(Course& c); // done
   void RemoveStudent(string username); // done
   void ManageGrades(Student& s, Course& c, int grade); // done
+  void EditCourse(Course& c);
   Student* SearchStudent(string username); // done
 };

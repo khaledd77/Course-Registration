@@ -47,3 +47,33 @@ void Admin::SetPre(Course& c) {
         cout << "Prerequisite added.\n";
     }
 }
+void Admin::EditCourse(Course& c){
+   cout << "Choose what you want to edit : \n";
+   cout << "1. Name\n2. Id\n3. Length\n";
+   char choice;
+   cin >> choice;
+   if(choice == 1) {
+    string newName;
+    cin >> newName;
+    if(Course::courses.find(newName) != Course::courses.end()) {
+            cout << "Name already exists.\n";
+            return;
+    }
+    Course::courses.erase(c.Name);
+    c.Name = newName;
+    Course::courses[c.Name] = &c;
+    cout << "Updated\n";
+  } else if(choice == 2) {
+    string id;
+    cin >> id;
+    c.Id = id;
+    cout << "Updated\n";
+  } else if(choice == 3) {
+    int length;
+    cin >> length;
+    c.Length = length;
+    cout << "Updated\n";
+   } else {
+    cout << "Invalid\n";
+   }
+}

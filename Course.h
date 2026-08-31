@@ -14,7 +14,9 @@ class Course {
   vector<Course*>Prerequisites;
   public :
   Course(string, string, int);
+  void ViewPre();
+  void ViewStudents();
   string Name;
   static unordered_map<string, Course*> courses;
-  void EditCourse(Course& c);
+  
 };
