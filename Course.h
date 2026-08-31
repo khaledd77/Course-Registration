@@ -2,15 +2,18 @@
 #include <bits/stdc++.h>
 using namespace std;
 class Student;
+class Admin;
  
 class Course {
- public :
-  string Name;
+  friend class Admin;
+  friend class Student;
+  protected :
   string Id;  
   int Length;
-  vector<Course*>Prerequisites;
   vector<Student*> Students;
+  vector<Course*>Prerequisites;
   public :
+  string Name;
   static unordered_map<string, Course*> courses;
   void EditCourse(Course& c);
 };

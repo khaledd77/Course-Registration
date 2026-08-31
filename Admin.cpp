@@ -23,9 +23,27 @@ void Admin::ManageGrades(Student& s, Course& c, int grade) {
 }
 Student* Admin::SearchStudent(string username) {
     auto it = users.find(username);
-    if(it == users.end()) {
+    if(it == users.end() || !it->second->isStudent) {
         cout << "Not found ! \n";
         return nullptr;
     }
     return static_cast<Student*>(it->second);
+}
+void Admin::SetPre(Course& c) {
+    for(auto i : Course::courses) {
+        cout << i.first <<", ";
+    }
+    cout << "\n";
+    string name;
+    cout << "Enter prerequisite course name (-1 to stop):\n";
+    while(cin >> name && name != "-1")
+    {
+        auto it = Course::courses.find(name);
+        if(it == Course::courses.end()) {
+            cout << "Course not found.\n";
+            continue;
+        }
+        c.Prerequisites.push_back(it->second);
+        cout << "Prerequisite added.\n";
+    }
 }

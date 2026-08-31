@@ -11,7 +11,17 @@ void Student::ViewGrades() {
     }
 }
 void Student::AddCourse(Course& c) {
+    if(courses.find(&c) != courses.end()) {
+        cout << "You are already registered in this course.\n";
+        return;
+    }
+    if(!CheckPre(c)) {
+        cout << "You are not eligible for this course.\n";
+        return;
+    }
     courses.insert(&c);
+    c.Students.push_back(this);
+    cout << "Course added successfully\n";
 }
 void Student::Report() {
     cout << "Student\n";
@@ -25,10 +35,27 @@ void Student::Report() {
 }
 void Student::DropCourse(Course& c) {
     courses.erase(&c);
+     c.Students.erase(
+        remove(c.Students.begin(), c.Students.end(), this),
+        c.Students.end()
+    );
 }
 void Student::ViewRegCourses() {
     cout << "Registered courses : \n";
     for(auto i : courses) {
         cout << i->Name << endl;
     }
+}
+bool Student::CheckPre(Course& c) {
+    for(Course* pre : c.Prerequisites)
+    {
+        auto it = grades.find(pre->Name);
+
+        if(it == grades.end() || it->second < 60)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }

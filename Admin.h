@@ -8,7 +8,7 @@ class Admin : public User {
  Admin(string firstName, string lastName, string userName, string password); // done
   void RemoveCourse(string name); // done
   void AddCourse(Course& c); // done
-  void SetPre(Course& c);
+  void SetPre(Course& c); // done
   void RemoveStudent(string username); // done
   void ManageGrades(Student& s, Course& c, int grade); // done
   Student* SearchStudent(string username); // done
