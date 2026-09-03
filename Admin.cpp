@@ -47,7 +47,18 @@ void Admin::RemoveStudent(string username) {
     cout << "Student removed.\n";
 }
 void Admin::ManageGrades(Student& s, Course& c, int grade) {
-    s.grades[c.Name] = grade;
+    bool isreg = false;
+    for(auto &i : c.Students) {
+        if(i == &s) {
+            isreg = true;
+        }
+    }
+    if(isreg) {
+        s.grades[c.Name] = grade;
+        cout << "UPDATED!\n";
+    }
+    else 
+    cout << "This student isn't registered in this course.\n";
 }
 Student* Admin::SearchStudent(string username) {
     auto it = users.find(username);
@@ -58,10 +69,17 @@ Student* Admin::SearchStudent(string username) {
     return static_cast<Student*>(it->second);
 }
 void Admin::SetPre(Course& c) {
+    bool first = 1;
+    cout << "Courses to select : ";
     for(auto i : Course::courses) {
-        cout << i.first <<", ";
+        if(i.second == &c) {
+            continue;
+        }
+        if(!first) cout << ", ";
+        cout << i.first;
+        first = 0;
     }
-    cout << "\n";
+    cout << ".\n";
     string name;
     cout << "Enter prerequisite course name (-1 to stop):\n";
     while(getline(cin, name) && name != "-1")
@@ -76,9 +94,11 @@ void Admin::SetPre(Course& c) {
     }
 }
 void Admin::EditCourse(Course& c){
-   cout << "Choose what you want to edit : \n";
-   cout << "1. Name\n2. Length\n";
+   cout << "Choose what you want to edit :- \n";
+   cout << "1. Name\n";
+   cout << "2. Length\n";
    int choice;
+   cout << "Enter your choice : ";
    cin >> choice;
    if(choice == 1) {
     string newName;
@@ -87,16 +107,25 @@ void Admin::EditCourse(Course& c){
             cout << "Name already exists.\n";
             return;
     }
+    string old = c.Name;
+    for(Student* s : c.Students) {
+       auto it = s->grades.find(old);
+       if(it != s->grades.end()) {
+        int grade = it->second;
+        s->grades.erase(it);
+        s->grades[newName] = grade;
+       }
+    }
     Course::courses.erase(c.Name);
     c.Name = newName;
     Course::courses[c.Name] = &c;
-    cout << "Updated\n";
+    cout << "Updated!\n";
   } else if(choice == 2) {
     int length;
     cin >> length;
     c.Length = length;
-    cout << "Updated\n";
+    cout << "Updated!\n";
    } else {
-    cout << "Invalid\n";
+    cout << "Invalid.\n";
    }
 }

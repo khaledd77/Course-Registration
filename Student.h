@@ -14,5 +14,5 @@ class Student : public User {
  void Report();
  void DropCourse(Course& c);
  void ViewRegCourses();
- bool CheckPre(Course& c);
+ int CheckPre(Course& c);
 };

@@ -12,19 +12,28 @@ void Course::ViewPre() {
         cout << "No prerequisites.\n";
         return;
     }
+    cout << "Courses : ";
+    bool first = 1;
     for(auto i : Prerequisites) {
-        cout << i->Name << " ";
+        if(!first) cout << ", ";
+        cout << i->Name;
+        first = 0;
     }
-    cout << endl;
+    cout <<".\n";
 }
 void Course::ViewStudents() {
     if(Students.empty()) {
-        cout << "No students\n";
+        cout << "No students.\n";
         return;
     }
-    cout << Name << " Students : \n";
+    cout << Name << " Students :- \n";
+    bool first = true;
     for(auto i : Students) {
-        cout << i->FirstName << " " << i->LastName << ", ";
+        if(!first) {
+            cout << ", ";
+        }
+        cout << i->FirstName << " " << i->LastName;
+        first = false;
     }
-    cout << "\n";
+    cout << ".\n";
 }

@@ -19,7 +19,7 @@ void Student::AddCourse(Course& c) {
         cout << "You are already registered in this course.\n";
         return;
     }
-    if(!CheckPre(c)) {
+    if(CheckPre(c) == 0) {
         cout << "You are not eligible for this course.\n";
         return;
     }
@@ -32,9 +32,23 @@ void Student::Report() {
     cout << "Name : " ;
     cout << FirstName << " " <<  LastName << endl;
     cout << "Username : " << UserName << endl;
-    cout << "Grades : \n";
+    cout << "Registered courses :- \n";
+    if(courses.empty()) {
+        cout << "There are no courses to show.\n";
+        return; 
+    }
+    bool first = 1;
+    bool worked = 0;
+    for(auto i : courses) {
+        if(!first) cout << ", ";
+        cout << i->Name;
+        first = 0;
+        worked = 1;
+    }
+    if(worked) cout << ".\n";
+    cout << "Grades :- \n";
     if(grades.empty()) {
-        cout << "There are no grades to show\n";
+        cout << "There are no grades to show.\n";
         return;
     }
     for(auto i : grades) {
@@ -63,16 +77,17 @@ void Student::ViewRegCourses() {
         cout << i->Name << endl;
     }
 }
-bool Student::CheckPre(Course& c) {
+int Student::CheckPre(Course& c) {
+    if(courses.find(&c) != courses.end()) {
+        return 2;
+    }
     for(Course* pre : c.Prerequisites)
     {
         auto it = grades.find(pre->Name);
 
-        if(it == grades.end() || it->second < 60)
-        {
-            return false;
-        }
+        if(it == grades.end() || it->second < 60) return 0;
+        
     }
 
-    return true;
+    return 1;
 }
