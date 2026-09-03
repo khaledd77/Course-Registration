@@ -8,12 +8,11 @@ class Course {
   friend class Admin;
   friend class Student;
   protected :
-  string Id;  
   int Length;
   vector<Student*> Students;
   vector<Course*>Prerequisites;
   public :
-  Course(string, string, int);
+  Course(string, int);
   void ViewPre();
   void ViewStudents();
   string Name;

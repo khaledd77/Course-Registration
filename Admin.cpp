@@ -25,9 +25,7 @@ void Admin::RemoveCourse(string name) {
     }
     Course::courses.erase(it);
     delete c;
-}
-void Admin::AddCourse(Course& c) {
-   Course::courses[c.Name] = &c;
+    cout << "Course removed.\n";
 }
 void Admin::RemoveStudent(string username) {
     auto it = users.find(username);
@@ -46,6 +44,7 @@ void Admin::RemoveStudent(string username) {
     passwords.erase(s->Password);
     users.erase(it);
     delete s;
+    cout << "Student removed.\n";
 }
 void Admin::ManageGrades(Student& s, Course& c, int grade) {
     s.grades[c.Name] = grade;
@@ -65,7 +64,7 @@ void Admin::SetPre(Course& c) {
     cout << "\n";
     string name;
     cout << "Enter prerequisite course name (-1 to stop):\n";
-    while(cin >> name && name != "-1")
+    while(getline(cin, name) && name != "-1")
     {
         auto it = Course::courses.find(name);
         if(it == Course::courses.end()) {
@@ -78,7 +77,7 @@ void Admin::SetPre(Course& c) {
 }
 void Admin::EditCourse(Course& c){
    cout << "Choose what you want to edit : \n";
-   cout << "1. Name\n2. Id\n3. Length\n";
+   cout << "1. Name\n2. Length\n";
    int choice;
    cin >> choice;
    if(choice == 1) {
@@ -93,11 +92,6 @@ void Admin::EditCourse(Course& c){
     Course::courses[c.Name] = &c;
     cout << "Updated\n";
   } else if(choice == 2) {
-    string id;
-    cin >> id;
-    c.Id = id;
-    cout << "Updated\n";
-  } else if(choice == 3) {
     int length;
     cin >> length;
     c.Length = length;

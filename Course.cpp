@@ -2,9 +2,8 @@
 #include "Student.h"
 #include "Course.h"
 unordered_map<string, Course*> Course::courses;
-Course::Course(string name, string id, int length) {
+Course::Course(string name, int length) {
     Name = name;
-    Id = id;
     Length = length;
     courses[Name] = this;
 }
@@ -23,6 +22,7 @@ void Course::ViewStudents() {
         cout << "No students\n";
         return;
     }
+    cout << Name << " Students : \n";
     for(auto i : Students) {
         cout << i->FirstName << " " << i->LastName << ", ";
     }
