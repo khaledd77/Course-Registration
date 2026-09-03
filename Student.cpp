@@ -6,6 +6,10 @@ Student::Student(string firstName, string lastName,
 {
 }
 void Student::ViewGrades() {
+    if(grades.empty()) {
+        cout << "No grades to show\n";
+        return;
+    }
     for(auto i : grades) {
         cout << i.first << ": " << i.second << "\n";
     }
@@ -29,18 +33,31 @@ void Student::Report() {
     cout << FirstName << " " <<  LastName << endl;
     cout << "Username : " << UserName << endl;
     cout << "Grades : \n";
+    if(grades.empty()) {
+        cout << "There are no grades to show\n";
+        return;
+    }
     for(auto i : grades) {
         cout << i.first << ": " << i.second << endl;
     }
 }
 void Student::DropCourse(Course& c) {
+     if(courses.find(&c) == courses.end()) {
+        cout << "You are not registered in this course.\n";
+        return;
+    }
     courses.erase(&c);
      c.Students.erase(
         remove(c.Students.begin(), c.Students.end(), this),
         c.Students.end()
     );
+    cout << "Course dropped successfully.\n";
 }
 void Student::ViewRegCourses() {
+    if(courses.empty()) {
+        cout << "There are no courses to show\n";
+        return;
+    }
     cout << "Registered courses : \n";
     for(auto i : courses) {
         cout << i->Name << endl;

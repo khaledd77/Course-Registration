@@ -28,9 +28,6 @@ User* User::SignIn(string userN, string pass) {
    cout << "Signed in successfully. \n";
    return user;
 }
-void User::SignOut(User*& u) {
-    u = nullptr;
-}
 void User::EditData() {
     cout << "Choose the data you wish to edit :\n";
     cout << "1. First Name\n";
@@ -38,35 +35,33 @@ void User::EditData() {
     cout << "3. UserName\n";
     cout << "4. Password\n";
     int choice;
+    cout << "Enter your choice : ";
     cin >> choice;
     if(choice == 1) {
         cout << "Enter your new first name : ";
         string s;
         cin >> s;
-        cout << "\n";
         FirstName = s;
     } else if(choice == 2) {
-        cout << "Enter your new last name\n";
+        cout << "Enter your new last name : ";
         string s; 
         cin >> s;
-        cout << "\n";
         LastName = s;
     } else if(choice == 3) {
-        cout << "Enter your new username\n";
+        cout << "Enter your new username : ";
         string s; 
-        cin >> s; 
-        cout << "\n";      
+        cin >> s;       
         if(availableUsername(s)) {
            usernames.erase(UserName);
            users.erase(UserName);
            UserName = s;
            users[s] = this;
            usernames.insert(UserName);
-           cout << "Updated\n";
+           cout << "Updated!\n";
         } else {
             char cc;
             while(!availableUsername(s)) {
-                cout << "Unavailable Username, would you like to enter again? y/n \n";
+                cout << "Unavailable Username, would you like to enter again? y/n : ";
                 cin >> cc;
                 if(cc == 'N' || cc == 'n') {
                     break;
@@ -79,34 +74,33 @@ void User::EditData() {
                UserName = s;
                users[s] = this;
                usernames.insert(UserName);
-               cout << "Updated\n";
+               cout << "Updated!\n";
             }
         }
     } else if(choice == 4) {
-        cout << "Enter your new password\n";
+        cout << "Enter your new password : ";
         string s; 
         cin >> s;
-        cout << "\n";
-        if(availablePass(s)) {
+        if(ValidPass(s)) {
            passwords.erase(Password);
            Password = s;
            passwords.insert(Password);
            cout << "Updated\n";
         } else {
            char cc;
-           while(!availablePass(s)) {
-               cout << "Unavailable Password, would you like to enter again? y/n \n";
+           while(!ValidPass(s)) {
+               cout << "Unavailable Password, would you like to enter again? y/n : ";
                cin >> cc;
                if(cc == 'N' || cc == 'n') {
                    break;
                }
                cin >> s;
            }
-           if(availablePass(s)) {
+           if(ValidPass(s)) {
               passwords.erase(Password);
               Password = s;
               passwords.insert(Password);
-              cout << "Updated\n";
+              cout << "Updated!\n";
             }
         }
     } else {
@@ -120,9 +114,9 @@ bool User::availableUsername(string username)
     return usernames.find(username) == usernames.end();
 }
 
-bool User::availablePass(string password)
+bool User::ValidPass(string password)
 {
-    return passwords.find(password) == passwords.end();
+    return password.length() >= 8;
 }
 Course* User::SearchCourse(string name)
 {

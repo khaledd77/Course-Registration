@@ -17,9 +17,7 @@ public :
  User(string firstName, string lastName, string userName, string password, bool);
   void EditData(); // done
   static User* SignIn(string, string); // done
-  void SignOut(User*&); // We could make it in the main as a regular function
   Course* SearchCourse(string name); // done
- private :
- bool availablePass(string ); // done
- bool availableUsername(string ); // done
+  static bool ValidPass(string ); // done
+  static bool availableUsername(string ); // done
 };
